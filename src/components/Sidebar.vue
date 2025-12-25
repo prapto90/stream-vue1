@@ -6,9 +6,6 @@
     <h5 class="mb-3">My Dashboard</h5>
     <ul class="nav flex-column">
       <li class="nav-item mb-2">
-        <a class="nav-link text-white" href="/dashboard">Dashboard</a>
-      </li>
-      <li class="nav-item mb-2">
         <a class="nav-link text-white" href="/live">Live</a>
       </li>
       <li class="nav-item">
