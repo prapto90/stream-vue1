@@ -1,21 +1,19 @@
-import manifest from "__STATIC_CONTENT_MANIFEST";
 import { getAssetFromKV } from "@cloudflare/kv-asset-handler";
 
-export default {
-  async fetch(request, env, ctx) {
-    try {
-      return await getAssetFromKV(
-        {
-          request,
-          waitUntil: ctx.waitUntil.bind(ctx),
-        },
-        {
-          ASSET_NAMESPACE: env.__STATIC_CONTENT,
-          ASSET_MANIFEST: manifest,
-        }
-      );
-    } catch (e) {
-      return new Response("Not Found", { status: 404 });
-    }
-  },
-};
+// Mendaftarkan event handler untuk menangani permintaan 'fetch' (permintaan HTTP)
+addEventListener("fetch", (event) => {
+  event.respondWith(handleEvent(event));
+});
+
+async function handleEvent(event) {
+  try {
+    // Logika Workers Site: Mencoba mengambil aset statis dari KV
+    return await getAssetFromKV(event);
+  } catch (e) {
+    // Jika tidak ditemukan, kembalikan 404
+    let pathname = new URL(event.request.url).pathname;
+    return new Response(`"${pathname}" not found`, {
+      status: 404,
+    });
+  }
+}
