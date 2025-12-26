@@ -1,4 +1,4 @@
-name = "coretaxdownload"
+name = "stream-vue1"
 main = "worker.js" # Nama file Worker utama (lihat langkah selanjutnya)
 compatibility_date = "2025-12-26"
 
