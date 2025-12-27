@@ -4,6 +4,7 @@
 export default {
   async fetch(request, env) {
     try {
+
       return new Response(
         JSON.stringify({
           api_base: env.API_BASE_URL,
@@ -11,6 +12,7 @@ export default {
         }),
         { headers: { "Content-Type": "application/json" } }
       );
+
 
     } catch (e) {
       return new Response(
