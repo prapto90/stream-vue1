@@ -63,8 +63,8 @@ const login = async () => {
   loading.value = true;
 
   try {
-    const res = await fetch(`/auth/token`, {
-    // const res = await fetch(`${API_BASE_URL}/auth/token`, {
+    // const res = await fetch(`/auth/token`, {
+    const res = await fetch(`${API_BASE_URL}/auth/token`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
