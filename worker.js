@@ -1,25 +1,14 @@
-
-
-
 export default {
   async fetch(request, env) {
-    try {
+    const url = new URL(request.url);
 
-      return new Response(
-        JSON.stringify({
-          api_base: env.API_BASE_URL,
-          path: new URL(request.url).pathname
-        }),
-        { headers: { "Content-Type": "application/json" } }
-      );
+    // proxy ke backend
+    const target = env.API_BASE_URL + url.pathname;
 
-
-    } catch (e) {
-      return new Response(
-        JSON.stringify({ error: e.message }),
-        { status: 500 }
-      );
-    }
+    return fetch(target, {
+      method: request.method,
+      headers: request.headers,
+      body: request.method !== "GET" ? request.body : null
+    });
   }
 };
-
