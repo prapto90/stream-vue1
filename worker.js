@@ -4,13 +4,18 @@ export default {
 
     if (url.pathname.startsWith("/auth/")) {
       const target = env.API_BASE_URL + url.pathname;
-      const headers = new Headers(request.headers);
-      headers.delete("content-length");
+
+      const headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      };
 
       return fetch(target, {
         method: request.method,
         headers,
-        body: request.method !== "GET" ? request.body : null,
+        body: request.method !== "GET"
+          ? await request.text()
+          : null,
       });
     }
 
