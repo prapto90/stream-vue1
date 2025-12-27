@@ -2,23 +2,26 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    // ===== API AUTH PROXY =====
     if (url.pathname.startsWith("/auth/")) {
       const target = env.API_BASE_URL + url.pathname;
 
-      const headers = {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      };
+      const body =
+        request.method !== "GET"
+          ? await request.text()
+          : null;
 
       return fetch(target, {
         method: request.method,
-        headers,
-        body: request.method !== "GET"
-          ? await request.text()
-          : null,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        body,
       });
     }
 
+    // ===== SPA =====
     if (url.pathname === "/") {
       return env.ASSETS.fetch(new Request("/index.html", request));
     }
