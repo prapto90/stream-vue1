@@ -40,7 +40,7 @@
 import { ref, onMounted } from "vue";
 
 // Ambil env Vite
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 // console.log("API_BASE_URL:", API_BASE_URL);
 
 // Reactive state
@@ -63,8 +63,7 @@ const login = async () => {
   loading.value = true;
 
   try {
-    // const res = await fetch(`/auth/token`, {
-    const res = await fetch(`${API_BASE_URL}/auth/token`, {
+    const res = await fetch("/auth/token", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -80,17 +79,16 @@ const login = async () => {
       return;
     }
 
-    // simpan token
     localStorage.setItem("access_token", data.access_token);
+    window.location.href = "/live";
 
-    // redirect
-    window.location.href = "live";
   } catch (err) {
     error.value = "Server tidak dapat dihubungi";
   } finally {
     loading.value = false;
   }
 };
+
 </script>
 
 <style scoped>
