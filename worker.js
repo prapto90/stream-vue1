@@ -8,6 +8,7 @@ export default {
     if (url.pathname.startsWith("/api/")) {
       const target =
         env.API_BASE_URL + url.pathname.replace("/api", "");
+        console.log("API:", env.API_BASE_URL);
 
       return fetch(target, {
         method: request.method,
